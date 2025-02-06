@@ -74,7 +74,7 @@ if [ ! -f "$CERT_DIR/${DOMAIN}_ecc/fullchain.cer" ]; then
 else
     # 3. Renew and deploy certificate to Synology DSM
     echo "🔄 Certificate already exists, checking for renewal..."
-    "$ACME_HOME/acme.sh" --renew -d "$DOMAIN" --ecc $ACME_ARGS || { echo "❌ Error: Certificate renewal failed"; exit 1; }
+    "$ACME_HOME/acme.sh" --renew -d "$DOMAIN" --ecc $ACME_ARGS || echo "❌ Error: Certificate renewal failed"
 fi
 
 echo "📤 Deploying certificate to Synology DSM..."
