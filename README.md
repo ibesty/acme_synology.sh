@@ -25,6 +25,8 @@ export ACME_EMAIL="your-email@example.com"
 To deploy the certificate to Synology DSM, you must set either:
 - `SYNO_USE_TEMP_ADMIN=true` (for temporary admin mode), **or**
 - Both `SYNO_USERNAME` and `SYNO_PASSWORD` (for permanent admin authentication).
+- If you change ports/hostname/scheme, you can also set `SYNO_SCHEME`, `SYNO_HOSTNAME`, `SYNO_PORT`. see https://github.com/acmesh-official/acme.sh/blob/master/deploy/synology_dsm.sh
+- If variables has special characters, you can escape them with `\`.
 
 Example:
 
