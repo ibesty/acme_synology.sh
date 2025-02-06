@@ -71,14 +71,14 @@ fi
 if [ ! -f "$CERT_DIR/${DOMAIN}_ecc/fullchain.cer" ]; then
     echo "🔑 Certificate not found, issuing a new one..."
     "$ACME_HOME/acme.sh" --issue --dns dns_cf --ecc -d "$DOMAIN" -d "*.$DOMAIN" $ACME_ARGS || { echo "❌ Error: Certificate issuance failed"; exit 1; }
-
-    echo "📤 Deploying certificate to Synology DSM..."
-    "$ACME_HOME/acme.sh" --deploy -d "$DOMAIN" --deploy-hook synology_dsm $ACME_ARGS || { echo "❌ Error: Certificate deployment failed"; exit 1; }
 else
     # 3. Renew and deploy certificate to Synology DSM
     echo "🔄 Certificate already exists, checking for renewal..."
-    "$ACME_HOME/acme.sh" --renew -d "$DOMAIN" --ecc --deploy-hook synology_dsm $ACME_ARGS || { echo "❌ Error: Certificate renewal failed"; exit 1; }
+    "$ACME_HOME/acme.sh" --renew -d "$DOMAIN" --ecc $ACME_ARGS || { echo "❌ Error: Certificate renewal failed"; exit 1; }
 fi
+
+echo "📤 Deploying certificate to Synology DSM..."
+"$ACME_HOME/acme.sh" --ecc --deploy -d "$DOMAIN" --deploy-hook synology_dsm $ACME_ARGS || { echo "❌ Error: Certificate deployment failed"; exit 1; }
 
 echo "📂 Certificates are stored in: $CERT_DIR"
 echo "🎉 SSL certificate update completed!"
