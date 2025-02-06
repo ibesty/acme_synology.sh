@@ -49,11 +49,14 @@ if [ ! -f "$ACME_HOME/acme.sh" ]; then
 
     if [ "$USE_GITEE" = true ]; then
         echo "🌐 Using Gitee mirror for installation..."
-        CLONE_NAME="acme.sh-main"
-        git clone https://gitee.com/best1e/acme.sh.git $CLONE_NAME
+        CLONE_NAME="acme.sh-master"
+        rm -rf "$CLONE_NAME"
+        wget https://gitee.com/best1e/acme.sh/repository/archive/master.zip -O $CLONE_NAME.zip
+        unzip $CLONE_NAME.zip
         cd "$CLONE_NAME"
         ./acme.sh --install -m "$ACME_EMAIL" --home "$ACME_HOME" --config-home "$CONFIG_DIR" --cert-home "$CERT_DIR" --noprofile --nocron || { echo "❌ Error: acme.sh installation failed"; exit 1; }
         cd ..
+        rm acme.sh-master.zip
         rm -rf "$CLONE_NAME"
     else
         echo "🌐 Using GitHub for installation..."

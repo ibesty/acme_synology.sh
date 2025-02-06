@@ -12,7 +12,7 @@ Before running the script, ensure that:
 
 ## 🛠 Environment Variables
 
-Before running the script, export the following variables:
+Before running the script, make sure you have the following variables:
 
 ```sh
 export DOMAIN="yourdomain.com"
@@ -39,10 +39,11 @@ export SYNO_PASSWORD="your-synology-password"
 
 ### Standard Installation (GitHub Source)
 
-Run the script:
+Clone the repository and run the script:
 
 ```sh
-bash ssl_cert.sh
+mkdir acme_synology.sh
+wget https://raw.githubusercontent.com/ibesty/acme_synology.sh/refs/heads/main/acme_synology.sh -O acme_synology.sh/acme_synology.sh
 ```
 
 This will:
@@ -58,7 +59,8 @@ This will:
 If you have trouble accessing GitHub, use the `--use-gitee` flag to install `acme.sh` from Gitee:
 
 ```sh
-bash ssl_cert.sh --use-gitee
+mkdir acme_synology.sh
+wget https://gitee.com/best1e/acme_synology.sh/raw/main/acme_synology.sh -O acme_synology.sh/acme_synology.sh
 ```
 
 This will install `acme.sh` from:
@@ -68,6 +70,36 @@ https://gitee.com/best1e/acme.sh.git
 ```
 
 instead of GitHub.
+
+## 🔄 Automate with Synology DSM Task Scheduler
+
+After downloading the script, follow these steps to set up automatic execution in Synology DSM:
+
+1. **Open Synology DSM Control Panel**
+2. **Navigate to `Control Panel > Task Scheduler`**
+3. **Click `Create` and select `Scheduled Task > User-defined Script`**
+4. **Enter Task Name** (e.g., `Auto SSL Renewal`)
+5. **Set User Account**
+   - Choose any administrator account.
+6. **Set Schedule**
+   - Configure the task to run weekly or at your preferred interval.
+7. **Define the User Script**
+   - Add the following environment variables in the script:
+
+   ```sh
+   export CF_Token="your-cloudflare-api-token"
+   export ACME_EMAIL="your-email@example.com"
+   export SYNO_USERNAME="your-synology-admin"
+   export SYNO_PASSWORD="your-synology-password"
+   
+   bash /path/to/your/acme_synology.sh/acme_synology.sh --use-gitee
+   ```
+
+8. **Save and Confirm**
+9. **Manually Run the Task Once**
+   - Click the `Run` button in the menu bar.
+10. **Check Execution Results**
+   - Click `Action > View Results` to confirm successful deployment.
 
 ## 📂 Certificate Storage
 
@@ -86,3 +118,4 @@ You can configure the path by modifying the `CERT_DIR` variable in the script.
 - If you encounter issues, check `acme.sh` logs for details.
 
 ## 🎉 Enjoy your automated SSL setup!
+
