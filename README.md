@@ -1,4 +1,4 @@
-# SSL Certificate Automation Deployed to Synology DSM with acme.sh
+# SSL Certificate Automation with acme.sh
 
 This script automates the process of issuing, renewing, and deploying SSL certificates using [`acme.sh`](https://github.com/acmesh-official/acme.sh) with Cloudflare DNS verification and deployment to Synology DSM.
 
@@ -37,19 +37,37 @@ export SYNO_PASSWORD="your-synology-password"
 
 ## 🚀 Usage
 
+### Standard Installation (GitHub Source)
+
 Run the script:
 
 ```sh
 bash ssl_cert.sh
 ```
 
-The script will:
+This will:
 1. Check for required environment variables.
-2. Install `acme.sh` if not already installed.
+2. Install `acme.sh` from GitHub (if not already installed).
 3. Register an ACME account if necessary.
 4. Issue a wildcard SSL certificate for the domain using Cloudflare DNS.
 5. Deploy the certificate to Synology DSM.
 6. Automatically renew and deploy the certificate when needed.
+
+### Using Gitee Mirror
+
+If you have trouble accessing GitHub, use the `--use-gitee` flag to install `acme.sh` from Gitee:
+
+```sh
+bash ssl_cert.sh --use-gitee
+```
+
+This will install `acme.sh` from:
+
+```
+https://gitee.com/best1e/acme.sh.git
+```
+
+instead of GitHub.
 
 ## 📂 Certificate Storage
 
